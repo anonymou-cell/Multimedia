@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIT Notebook — Mid-Valley International College</title>
+<meta name="description" content="An interactive notebook for the BIT programme at Mid-Valley International College, Gyaneshwor, Kathmandu.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='6' y='6' width='28' height='28' rx='3' fill='none' stroke='%232C5F6F' stroke-width='2'/%3E%3Cpath d='M14 14h12v12H14z' fill='%23C97B2E'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="home">
+
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="paper-grain" aria-hidden="true"></div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+<div class="ink-transition" id="inkTransition" aria-hidden="true"></div>
+
+  
+<nav class="spine" aria-label="Notebook navigation">
+  <div class="spine-mark" aria-hidden="true">
+    <svg width="20" height="20" viewBox="0 0 40 40"><rect x="4" y="4" width="32" height="32" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M13 13h14v14H13z" fill="currentColor"/></svg>
+    <span>notebook</span>
+  </div>
+  <button class="spine-tab is-current" data-nav="index.html" aria-current="page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11l8-7 8 7v9a1 1 0 01-1 1h-4v-6H9v6H5a1 1 0 01-1-1z"/></svg>
+    <span>Home</span>
+  </button>
+  <button class="spine-tab" data-nav="about.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c1.2-4 4-6 7-6s5.8 2 7 6"/></svg>
+    <span>About</span>
+  </button>
+  <button class="spine-tab" data-nav="courses.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+    <span>Courses</span>
+  </button>
+  <button class="spine-tab" data-nav="contact.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>
+    <span>Contact</span>
+  </button>
+  <span class="spine-foot">gyaneshwor &middot; ktm</span>
+</nav>
+
+<main id="main" class="book-page hero-page">
+  <div class="hero-particles" aria-hidden="true"></div>
+
+  <div class="doodle" data-parallax="0.4" style="top:16%;right:10%;width:70px;height:70px" aria-hidden="true">
+    <svg viewBox="0 0 60 60"><rect x="16" y="16" width="28" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/><g stroke="currentColor" stroke-width="1.6"><path d="M22 16V8M30 16V8M38 16V8M22 44v8M30 44v8M38 44v8M16 22H8M16 30H8M16 38H8M44 22h8M44 30h8M44 38h8"/></g></svg>
+  </div>
+  <div class="doodle" data-parallax="0.55" style="bottom:20%;left:8%;width:64px;height:44px" aria-hidden="true">
+    <svg viewBox="0 0 60 40"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 16a34 34 0 0148 0"/><path d="M15 25a21 21 0 0130 0"/><path d="M24 34a9 9 0 0112 0"/></g></svg>
+  </div>
+  <div class="doodle mono" data-parallax="0.25" style="top:34%;left:5%;font-size:12px" aria-hidden="true">&gt; run --semester<span id="heroType"></span></div>
+
+  <span class="tag-strip"><span class="tag-dot"></span> admissions open — fall 2026 batch</span>
+
+  <h1 class="hero-title">
+    One notebook, <span class="grad-word">four semesters<svg class="underline-scribble" viewBox="0 0 220 24" preserveAspectRatio="none" aria-hidden="true"><path d="M4 14 C 40 4, 80 20, 118 10 S 190 4, 216 12" fill="none" stroke="#C97B2E" stroke-width="5" stroke-linecap="round"/></svg></span> of BIT.
+  </h1>
+
+  <p class="hero-sub">This is my own record of the Bachelor of Information Technology programme at Mid&#8209;Valley International College — flip a tab on the left to open a page: who we are, what we teach, or how to reach us.</p>
+
+  <div class="cta-row">
+    <button class="stamp-btn" data-nav="about.html"><span>Open the notebook</span></button>
+    <button class="ghost-btn" data-nav="contact.html">talk to admissions
+      <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <div class="hero-facts">
+    <div class="hero-fact"><strong>4</strong><span>semesters mapped</span></div>
+    <div class="hero-fact"><strong>18+</strong><span>courses tracked</span></div>
+    <div class="hero-fact"><strong>1</strong><span>very tired student</span></div>
+  </div>
+
+  <button class="corner-fold-hint" data-nav="about.html" aria-label="Turn to the About page">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

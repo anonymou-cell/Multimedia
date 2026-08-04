@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Courses — BIT Notebook, Mid-Valley International College</title>
+<meta name="description" content="The Bachelor of Information Technology programme roadmap at Mid-Valley International College.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='6' y='6' width='28' height='28' rx='3' fill='none' stroke='%232C5F6F' stroke-width='2'/%3E%3Cpath d='M14 14h12v12H14z' fill='%23C97B2E'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="courses">
+
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="paper-grain" aria-hidden="true"></div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+<div class="ink-transition" id="inkTransition" aria-hidden="true"></div>
+
+<nav class="spine" aria-label="Notebook navigation">
+  <div class="spine-mark" aria-hidden="true">
+    <svg width="20" height="20" viewBox="0 0 40 40"><rect x="4" y="4" width="32" height="32" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M13 13h14v14H13z" fill="currentColor"/></svg>
+    <span>notebook</span>
+  </div>
+  <button class="spine-tab" data-nav="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11l8-7 8 7v9a1 1 0 01-1 1h-4v-6H9v6H5a1 1 0 01-1-1z"/></svg>
+    <span>Home</span>
+  </button>
+  <button class="spine-tab" data-nav="about.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c1.2-4 4-6 7-6s5.8 2 7 6"/></svg>
+    <span>About</span>
+  </button>
+  <button class="spine-tab is-current" data-nav="courses.html" aria-current="page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+    <span>Courses</span>
+  </button>
+  <button class="spine-tab" data-nav="contact.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>
+    <span>Contact</span>
+  </button>
+  <span class="spine-foot">gyaneshwor &middot; ktm</span>
+</nav>
+
+<main id="main" class="book-page">
+  <div class="content-head">
+    <div>
+      <span class="eyebrow mono">page three</span>
+      <h2>Bachelor of Information Technology</h2>
+    </div>
+  </div>
+
+  <div class="promo-strip">
+    <div class="promo-copy">
+      <h3>Enrol for fall 2026 — get 15% off your first semester</h3>
+      <p>Early-bird pricing closes before the priority admissions deadline. Seats in this batch are limited.</p>
+    </div>
+    <button class="stamp-btn" data-nav="contact.html"><span>Enrol now</span></button>
+  </div>
+
+  <div class="roadmap-row">
+    <article class="mini-card" data-semester="1" tabindex="0" style="--rot:-2deg">
+      <span class="idx mono">01</span>
+      <h4>Semester 1</h4>
+      <p>Foundations — programming, logic, maths</p>
+    </article>
+    <article class="mini-card" data-semester="2" tabindex="0" style="--rot:1.5deg">
+      <span class="idx mono">02</span>
+      <h4>Semester 2</h4>
+      <p>Core building blocks — OOP, data structures, DBMS</p>
+    </article>
+    <article class="mini-card" data-semester="3" tabindex="0" style="--rot:-1.5deg">
+      <span class="idx mono">03</span>
+      <h4>Semester 3</h4>
+      <p>Systems &amp; the web — networks, OS, web tech</p>
+    </article>
+    <article class="mini-card" data-semester="4" tabindex="0" style="--rot:2deg">
+      <span class="idx mono">04</span>
+      <h4>Semester 4</h4>
+      <p>Applied practice — mobile, cloud, mini project</p>
+    </article>
+  </div>
+
+  <div class="testimonial-zone">
+    <button class="carousel-arrow prev" aria-label="Previous testimonial">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>
+    </button>
+    <div class="testimonial-track">
+      <p class="quote hand">&ldquo;&rdquo;</p>
+      <p class="who mono"></p>
+    </div>
+    <button class="carousel-arrow next" aria-label="Next testimonial">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+    <div class="carousel-dots"></div>
+  </div>
+</main>
+
+<div class="modal-overlay" id="roadmapModal">
+  <div class="modal-card">
+    <button class="modal-close" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <span class="modal-eyebrow mono">course list</span>
+    <h3 id="modalTitle">Semester</h3>
+    <ul class="course-list" id="modalCourseList"></ul>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
