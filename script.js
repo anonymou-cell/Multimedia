@@ -1,8 +1,64 @@
 (function () {
   const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const cursorGlow = document.getElementById('cursorGlow');
   const cursorDot = document.getElementById('cursorDot');
-  const inkTransition = document.getElementById('inkTransition');
+  const bookPage = document.querySelector('.book-page');
+  const pageOrder = [
+    { id: 'home', url: 'index.html', label: 'Home' },
+    { id: 'about', url: 'about.html', label: 'About' },
+    { id: 'courses', url: 'courses.html', label: 'Courses' },
+    { id: 'contact', url: 'contact.html', label: 'Contact' }
+  ];
+  const currentPageId = document.body.dataset.page;
+  const currentPageIndex = pageOrder.findIndex((page) => page.id === currentPageId);
+
+  function turnButton(direction, page) {
+    const arrow = direction === 'previous'
+      ? '<path d="M15 5l-7 7 7 7M8 12h11"/>'
+      : '<path d="M9 5l7 7-7 7M5 12h11"/>';
+    return `<button type="button" class="page-turn-button ${direction}" data-nav="${page.url}" data-turn="${direction}" aria-label="Turn to ${page.label} page">
+      <span class="turn-copy"><small>${direction === 'previous' ? 'previous' : 'next'} page</small><strong>${page.label}</strong></span>
+      <svg viewBox="0 0 24 24" aria-hidden="true">${arrow}</svg>
+    </button>`;
+  }
+
+  if (bookPage) {
+    const controls = document.createElement('nav');
+    controls.className = 'page-turn-controls';
+    controls.setAttribute('aria-label', 'Page turn controls');
+
+    if (currentPageIndex >= 0) {
+      const previous = pageOrder[currentPageIndex - 1];
+      const next = pageOrder[currentPageIndex + 1];
+      controls.innerHTML = `${previous ? turnButton('previous', previous) : '<span></span>'}
+        <span class="page-number mono">${String(currentPageIndex + 1).padStart(2, '0')} / ${String(pageOrder.length).padStart(2, '0')}</span>
+        ${next ? turnButton('next', next) : '<span></span>'}`;
+    } else if (currentPageId === 'thankyou') {
+      controls.innerHTML = `${turnButton('previous', pageOrder[3])}
+        <span class="page-number mono">note received</span>
+        ${turnButton('next', pageOrder[0])}`;
+    }
+
+    if (controls.innerHTML) document.body.appendChild(controls);
+
+    try {
+      const arrival = JSON.parse(sessionStorage.getItem('notebook-turn') || 'null');
+      const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+      if (arrival && arrival.target === currentFile) {
+        bookPage.classList.add(arrival.direction === 'previous' ? 'turn-in-previous' : 'turn-in-next');
+        sessionStorage.removeItem('notebook-turn');
+        const clearArrival = (event) => {
+          if (event.target !== bookPage) return;
+          bookPage.classList.remove('turn-in-previous', 'turn-in-next');
+          bookPage.removeEventListener('animationend', clearArrival);
+        };
+        bookPage.addEventListener('animationend', clearArrival);
+      }
+    } catch (_) {
+      // Navigation still works when storage is unavailable (for example, strict file privacy settings).
+    }
+  }
 
   if (hasFinePointer && cursorGlow && cursorDot) {
     window.addEventListener('mousemove', (e) => {
@@ -17,24 +73,59 @@
     });
   }
 
-  function travelTo(url, x, y) {
-    if (!inkTransition) { window.location.href = url; return; }
-    inkTransition.style.left = x + 'px';
-    inkTransition.style.top = y + 'px';
-    inkTransition.classList.remove('active');
-    void inkTransition.offsetWidth;
-    inkTransition.classList.add('active');
-    setTimeout(() => { window.location.href = url; }, 480);
+  let isTurning = false;
+
+  function directionTo(url, requestedDirection) {
+    if (requestedDirection) return requestedDirection;
+    const targetFile = url.split('/').pop();
+    const targetIndex = pageOrder.findIndex((page) => page.url === targetFile);
+    if (currentPageId === 'thankyou') return targetFile === 'index.html' ? 'next' : 'previous';
+    if (currentPageIndex < 0 || targetIndex < 0) return 'next';
+    return targetIndex < currentPageIndex ? 'previous' : 'next';
+  }
+
+  function travelTo(url, direction) {
+    if (isTurning) return;
+    isTurning = true;
+
+    if (!bookPage || reduceMotion) {
+      window.location.href = url;
+      return;
+    }
+
+    const turnDirection = directionTo(url, direction);
+    const targetFile = url.split('/').pop();
+    try {
+      sessionStorage.setItem('notebook-turn', JSON.stringify({
+        direction: turnDirection,
+        target: targetFile
+      }));
+    } catch (_) { /* The exit turn remains useful without an arrival state. */ }
+
+    document.body.classList.add('is-turning');
+    bookPage.classList.add(turnDirection === 'previous' ? 'turn-out-previous' : 'turn-out-next');
+
+    let navigated = false;
+    const finish = () => {
+      if (navigated) return;
+      navigated = true;
+      window.location.href = url;
+    };
+    const finishOnPageTurn = (event) => {
+      if (event.target !== bookPage) return;
+      bookPage.removeEventListener('animationend', finishOnPageTurn);
+      finish();
+    };
+    bookPage.addEventListener('animationend', finishOnPageTurn);
+    setTimeout(finish, 780);
   }
 
   document.querySelectorAll('[data-nav]').forEach((el) => {
     el.addEventListener('click', (e) => {
       e.preventDefault();
       const url = el.getAttribute('data-nav');
-      const rect = el.getBoundingClientRect();
-      const x = e.clientX || rect.left + rect.width / 2;
-      const y = e.clientY || rect.top + rect.height / 2;
-      travelTo(url, x, y);
+      if (currentPageIndex >= 0 && pageOrder[currentPageIndex].url === url) return;
+      travelTo(url, el.getAttribute('data-turn'));
     });
   });
 
@@ -218,9 +309,8 @@
       formSuccess.classList.remove('show');
       if (validateForm()) {
         formSuccess.classList.add('show');
-        const rect = form.getBoundingClientRect();
         setTimeout(() => {
-          travelTo('thankyou.html', rect.left + rect.width / 2, rect.top + rect.height / 2);
+          travelTo('thankyou.html', 'next');
         }, 700);
       } else {
         const firstInvalid = form.querySelector('.field.invalid input, .field.invalid textarea');
