@@ -56,27 +56,33 @@
   </div>
 
   <div class="roadmap-row">
-    <article class="mini-card" data-semester="1" tabindex="0" style="--rot:-2deg">
+    <article class="mini-card" data-semester="1" tabindex="0">
       <span class="idx mono">01</span>
       <h4>Semester 1</h4>
       <p>Foundations — programming, logic, maths</p>
     </article>
-    <article class="mini-card" data-semester="2" tabindex="0" style="--rot:1.5deg">
+    <article class="mini-card" data-semester="2" tabindex="0">
       <span class="idx mono">02</span>
       <h4>Semester 2</h4>
       <p>Core building blocks — OOP, data structures, DBMS</p>
     </article>
-    <article class="mini-card" data-semester="3" tabindex="0" style="--rot:-1.5deg">
+    <article class="mini-card" data-semester="3" tabindex="0">
       <span class="idx mono">03</span>
       <h4>Semester 3</h4>
       <p>Systems &amp; the web — networks, OS, web tech</p>
     </article>
-    <article class="mini-card" data-semester="4" tabindex="0" style="--rot:2deg">
+    <article class="mini-card" data-semester="4" tabindex="0">
       <span class="idx mono">04</span>
       <h4>Semester 4</h4>
       <p>Applied practice — mobile, cloud, mini project</p>
     </article>
   </div>
+
+  <section class="sem-detail" id="semDetail" aria-live="polite">
+    <span class="sem-detail-eyebrow mono">course list</span>
+    <h3 id="semDetailTitle">Pick a semester</h3>
+    <ul class="course-list" id="semDetailList"></ul>
+  </section>
 
   <div class="testimonial-zone">
     <button class="carousel-arrow prev" aria-label="Previous testimonial">
@@ -92,17 +98,6 @@
     <div class="carousel-dots"></div>
   </div>
 </main>
-
-<div class="modal-overlay" id="roadmapModal">
-  <div class="modal-card">
-    <button class="modal-close" aria-label="Close">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
-    </button>
-    <span class="modal-eyebrow mono">course list</span>
-    <h3 id="modalTitle">Semester</h3>
-    <ul class="course-list" id="modalCourseList"></ul>
-  </div>
-</div>
 
 <script src="script.js"></script>
 </body>

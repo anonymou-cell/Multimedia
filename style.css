@@ -670,8 +670,7 @@ button {
 }
 
 .testimonial-zone {
-  flex: 0 1 auto;
-  max-height: 36vh;
+  flex: 0 0 auto;
   min-height: 0;
   margin: 3vh 4vw max(4vh, var(--turn-space));
   border-radius: var(--radius-lg);
@@ -681,11 +680,11 @@ button {
   align-items: center;
   justify-content: center;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
-.testimonial-track { max-width: 640px; text-align: center; padding: 0 60px; }
-.testimonial-track p.quote { font-family: 'Caveat', cursive; font-size: clamp(1.3rem, 2.6vw, 1.8rem); color: var(--ink); line-height: 1.4; }
-.testimonial-track .who { margin-top: 14px; font-size: 0.85rem; color: var(--teal); font-weight: 600; }
+.testimonial-track { max-width: 560px; text-align: center; padding: 0 44px; }
+.testimonial-track p.quote { font-family: 'Caveat', cursive; font-size: clamp(0.92rem, 1.35vw, 1.15rem); color: var(--ink); line-height: 1.3; }
+.testimonial-track .who { margin-top: 8px; font-size: 0.72rem; color: var(--teal); font-weight: 600; }
 .carousel-arrow {
   position: absolute;
   top: 50%;
@@ -705,44 +704,22 @@ button {
 .carousel-dots span { width: 7px; height: 7px; border-radius: 50%; background: rgba(35,48,58,0.2); transition: background 0.25s, transform 0.25s; }
 .carousel-dots span.is-active { background: var(--rust); transform: scale(1.3); }
 
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(35,48,58,0.55);
-  backdrop-filter: blur(3px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 400;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-.modal-overlay.is-open { opacity: 1; pointer-events: auto; }
-.modal-card {
-  width: min(520px, 88vw);
-  max-height: min(78vh, 640px);
-  overflow: hidden;
-  background: var(--card);
+/* Semester detail — inline panel below the roadmap cards */
+.sem-detail {
+  margin: 2.5vh 4vw 0;
+  padding: 20px 26px;
   border-radius: var(--radius-lg);
-  padding: 30px 32px;
-  box-shadow: var(--shadow-lift);
-  transform: translateY(16px) scale(0.96);
-  transition: transform 0.35s cubic-bezier(0.2,0.8,0.2,1);
+  background: var(--card);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.2,0.8,0.2,1);
 }
-.modal-overlay.is-open .modal-card { transform: translateY(0) scale(1); }
-.modal-close {
-  position: absolute;
-  top: 18px; right: 22px;
-  width: 34px; height: 34px;
-  border-radius: 50%;
-  background: rgba(35,48,58,0.08);
-  display: flex; align-items: center; justify-content: center;
-  transition: background 0.2s, transform 0.2s;
-}
-.modal-close:hover { background: rgba(35,48,58,0.16); transform: rotate(90deg); }
-.modal-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--rust); letter-spacing: 0.1em; }
-.modal-card h3 { margin-top: 6px; font-size: 1.4rem; }
+.sem-detail.is-open { opacity: 1; transform: translateY(0); }
+.sem-detail-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--rust); letter-spacing: 0.1em; }
+.sem-detail h3 { margin-top: 6px; font-size: 1.4rem; }
+.mini-card.is-active { outline: 2px solid var(--amber); box-shadow: var(--shadow-lift); }
 .course-list { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
 .course-list li {
   padding: 10px 14px;
@@ -754,6 +731,9 @@ button {
   gap: 10px;
 }
 .course-list li::before { content: '\2022'; color: var(--rust); font-size: 1.2rem; line-height: 0; }
+
+/* Courses page: allow vertical scroll so the inline detail panel fits */
+body[data-page="courses"] .book-page { overflow-y: auto; }
 
 .contact-page { align-items: center; justify-content: center; }
 .postcard-shell {

@@ -199,43 +199,42 @@
     4: { title: 'Applied practice', courses: ['Mobile App Development', 'Systems Analysis & Design', 'Cloud Computing Fundamentals', 'Elective I', 'Minor Project'] }
   };
 
-  const modalOverlay = document.getElementById('roadmapModal');
-  if (modalOverlay) {
-    const modalTitle = document.getElementById('modalTitle');
-    const modalList = document.getElementById('modalCourseList');
-    const modalClose = modalOverlay.querySelector('.modal-close');
+  const semDetail = document.getElementById('semDetail');
+  if (semDetail) {
+    const semTitle = document.getElementById('semDetailTitle');
+    const semList = document.getElementById('semDetailList');
 
-    function openModal(semester) {
+    function showSemester(semester) {
       const data = courseData[semester];
       if (!data) return;
-      modalTitle.textContent = 'Semester ' + semester + ' — ' + data.title;
-      modalList.innerHTML = '';
+      semTitle.textContent = 'Semester ' + semester + ' — ' + data.title;
+      semList.innerHTML = '';
       data.courses.forEach((c) => {
         const li = document.createElement('li');
         li.textContent = c;
-        modalList.appendChild(li);
+        semList.appendChild(li);
       });
-      modalOverlay.classList.add('is-open');
+      semDetail.classList.remove('is-open');
+      void semDetail.offsetWidth; // reflow so the reveal transition replays on each change
+      semDetail.classList.add('is-open');
+      semDetail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
-    function closeModal() { modalOverlay.classList.remove('is-open'); }
 
     document.querySelectorAll('.mini-card').forEach((card) => {
-      const burstThenOpen = () => {
+      const burstThenShow = () => {
         if (card.classList.contains('is-bursting')) return;
         card.classList.add('is-bursting');
+        document.querySelectorAll('.mini-card').forEach((c) => c.classList.toggle('is-active', c === card));
         setTimeout(() => {
-          openModal(card.getAttribute('data-semester'));
+          showSemester(card.getAttribute('data-semester'));
           card.classList.remove('is-bursting');
         }, 550);
       };
-      card.addEventListener('click', burstThenOpen);
+      card.addEventListener('click', burstThenShow);
       card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); burstThenOpen(); }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); burstThenShow(); }
       });
     });
-    modalClose.addEventListener('click', closeModal);
-    modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
   }
 
   const testimonials = [
