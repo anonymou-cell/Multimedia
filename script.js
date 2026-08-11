@@ -220,9 +220,17 @@
     function closeModal() { modalOverlay.classList.remove('is-open'); }
 
     document.querySelectorAll('.mini-card').forEach((card) => {
-      card.addEventListener('click', () => openModal(card.getAttribute('data-semester')));
+      const burstThenOpen = () => {
+        if (card.classList.contains('is-bursting')) return;
+        card.classList.add('is-bursting');
+        setTimeout(() => {
+          openModal(card.getAttribute('data-semester'));
+          card.classList.remove('is-bursting');
+        }, 550);
+      };
+      card.addEventListener('click', burstThenOpen);
       card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(card.getAttribute('data-semester')); }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); burstThenOpen(); }
       });
     });
     modalClose.addEventListener('click', closeModal);

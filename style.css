@@ -645,8 +645,33 @@ button {
 .mini-card p { font-size: 0.82rem; color: var(--ink-soft); }
 .mini-card:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
 
+/* Semester card "burst" — plays before the modal opens */
+.mini-card.is-bursting {
+  pointer-events: none;
+  animation: cardBurst 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.mini-card.is-bursting::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+  background: radial-gradient(circle at center, rgba(201, 123, 46, 0.55), rgba(44, 95, 111, 0.18) 55%, transparent 75%);
+  animation: cardRing 0.55s ease-out both;
+  pointer-events: none;
+}
+@keyframes cardBurst {
+  0%   { transform: rotate(var(--rot, 0deg)) scale(1); box-shadow: var(--shadow-soft); }
+  45%  { transform: rotate(0deg) scale(1.14); box-shadow: 0 0 0 5px rgba(201, 123, 46, 0.4), var(--shadow-lift); }
+  100% { transform: rotate(0deg) scale(1); box-shadow: var(--shadow-soft); }
+}
+@keyframes cardRing {
+  from { transform: scale(0.5); opacity: 0.95; }
+  to   { transform: scale(1.7); opacity: 0; }
+}
+
 .testimonial-zone {
-  flex: 1;
+  flex: 0 1 auto;
+  max-height: 36vh;
   min-height: 0;
   margin: 3vh 4vw max(4vh, var(--turn-space));
   border-radius: var(--radius-lg);
@@ -912,3 +937,72 @@ button {
   .testimonial-track p.quote { font-size: 1.08rem; }
   .postcard-shell { transform: scale(0.92); }
 }
+
+/* ===== Home hero: photo background (fade + reflection) ===== */
+/* Scope: home page only. Other pages keep the notebook paper look. */
+body[data-page="home"] .book-page {
+  background-color: var(--paper);
+  background-image: url('Image.jpeg');
+  background-size: cover;
+  background-position: center;
+  filter: contrast(0.82);
+}
+/* Kill the torn-page edge strip on home */
+body[data-page="home"] .book-page::after { display: none; }
+
+/* Readability scrim + edge fade so the ink text stays legible over the photo */
+body[data-page="home"] .hero-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, rgba(239,230,211,0.78) 0%, rgba(239,230,211,0.55) 42%, rgba(239,230,211,0) 72%),
+    linear-gradient(to top, rgba(239,230,211,0.94), rgba(239,230,211,0.18) 40%, rgba(239,230,211,0) 58%);
+}
+
+/* Home hero text legibility: soft paper glow + solid backing for translucent bits */
+body[data-page="home"] .hero-title,
+body[data-page="home"] .hero-sub,
+body[data-page="home"] .hero-fact strong,
+body[data-page="home"] .hero-fact span {
+  text-shadow: 0 1px 0 rgba(239,230,211,0.9), 0 0 24px rgba(239,230,211,0.95), 0 0 46px rgba(239,230,211,0.8);
+}
+body[data-page="home"] .tag-strip,
+body[data-page="home"] .ghost-btn {
+  background: var(--card);
+}
+
+/* Reflected copy of the photo, mirrored and fading downward */
+.hero-reflect {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 40%;
+  z-index: 2;
+  pointer-events: none;
+  background-image: url('Image.jpeg');
+  background-size: cover;
+  background-position: center;
+  filter: contrast(0.82);
+  transform: scaleY(-1);
+  opacity: 0;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent 80%);
+          mask-image: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent 80%);
+  animation: heroReflectIn 1.5s ease 0.6s both;
+}
+@keyframes heroReflectIn {
+  from { opacity: 0; }
+  to   { opacity: 0.3; }
+}
+
+/* Lift hero text above the background layers */
+body[data-page="home"] .tag-strip,
+body[data-page="home"] .hero-title,
+body[data-page="home"] .hero-sub,
+body[data-page="home"] .cta-row,
+body[data-page="home"] .hero-facts {
+  position: relative;
+  z-index: 3;
+}
+body[data-page="home"] .hero-particles { z-index: 3; }
