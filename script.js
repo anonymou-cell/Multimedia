@@ -193,10 +193,26 @@
   });
 
   const courseData = {
-    1: { title: 'Foundations', courses: ['Programming Fundamentals (C)', 'Discrete Mathematics', 'Digital Logic', 'Communication English', 'Computer Fundamentals & Applications'] },
-    2: { title: 'Core building blocks', courses: ['Object-Oriented Programming (Java)', 'Data Structures & Algorithms', 'Database Management Systems', 'Statistics', 'Society & Technology'] },
-    3: { title: 'Systems & the web', courses: ['Web Technology', 'Operating Systems', 'Computer Networks', 'Software Engineering', 'Numerical Methods'] },
-    4: { title: 'Applied practice', courses: ['Mobile App Development', 'Systems Analysis & Design', 'Cloud Computing Fundamentals', 'Elective I', 'Minor Project'] }
+    1: {
+      title: 'Foundations',
+      image: 'https://images.unsplash.com/photo-1714846201670-1c5721196c7a?auto=format&fit=crop&w=1600&q=80',
+      courses: ['Programming Fundamentals (C)', 'Discrete Mathematics', 'Digital Logic', 'Communication English']
+    },
+    2: {
+      title: 'Core building blocks',
+      image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1600&q=80',
+      courses: ['Object-Oriented Programming (Java)', 'Data Structures & Algorithms', 'Database Management Systems', 'Statistics']
+    },
+    3: {
+      title: 'Systems & the web',
+      image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=80',
+      courses: ['Web Technology', 'Operating Systems', 'Computer Networks', 'Software Engineering']
+    },
+    4: {
+      title: 'Applied practice',
+      image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1600&q=80',
+      courses: ['Mobile App Development', 'Systems Analysis & Design', 'Cloud Computing Fundamentals', 'Elective I']
+    }
   };
 
   const semDetail = document.getElementById('semDetail');
@@ -207,6 +223,7 @@
     function showSemester(semester) {
       const data = courseData[semester];
       if (!data) return;
+      semDetail.style.setProperty('--semester-image', `url("${data.image}")`);
       semTitle.textContent = 'Semester ' + semester + ' — ' + data.title;
       semList.innerHTML = '';
       data.courses.forEach((c) => {
@@ -217,7 +234,6 @@
       semDetail.classList.remove('is-open');
       void semDetail.offsetWidth; // reflow so the reveal transition replays on each change
       semDetail.classList.add('is-open');
-      semDetail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     document.querySelectorAll('.mini-card').forEach((card) => {
@@ -235,6 +251,7 @@
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); burstThenShow(); }
       });
     });
+
   }
 
   const testimonials = [
